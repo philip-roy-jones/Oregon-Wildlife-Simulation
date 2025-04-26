@@ -10,6 +10,7 @@ extern float	NowPrecip;                          // inches of rain per month
 extern float	NowTemp;                            // temperature this month
 extern float	NowHeight;                          // grain height in inches
 extern int	NowNumDeer;                           // number of deer in the current population
+extern int NowNumWolf;                            // number of wolves in the current population
 
 // Global state variables for the barrier
 extern omp_lock_t	Lock;

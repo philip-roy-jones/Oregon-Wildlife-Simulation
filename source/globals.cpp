@@ -1,7 +1,8 @@
 #include <omp.h>
+#include <ctime>
 #include "../header/globals.h"
 
-unsigned int seed = 0;
+unsigned int seed = time(NULL);
 
 // Global state variables
 int	NowYear = 2025;   // 2025- 2030
@@ -11,6 +12,7 @@ float	NowPrecip;      // inches of rain per month
 float	NowTemp;        // temperature this month
 float	NowHeight = 5;  // grain height in inches
 int	NowNumDeer = 2;   // number of deer in the current population
+int NowNumWolf = 2;   // number of wolves in the current population
 
 // Global state variables for the barrier
 omp_lock_t	Lock;

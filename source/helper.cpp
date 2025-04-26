@@ -11,8 +11,9 @@ using namespace std;
 
 float Ranf( float low, float high )
 {
-  float r = (float) rand();               // 0 - RAND_MAX
-  float t = r  /  (float) RAND_MAX;       // 0. - 1.
+  srand(seed); // Use the global seed variable to seed the random number generator
+  float r = (float) rand();
+  float t = r  /  (float) RAND_MAX;
 
   return   low  +  t * ( high - low );
 }

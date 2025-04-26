@@ -57,6 +57,12 @@ void Grain()
 
 void Watcher() 
 {
+  #define CSV
+
+  #ifdef CSV
+    cout << "Year,Month,Temperature(C),Precipitation,GrainHeight(cm),DeerPopulation,WolfPopulation" << endl;
+  #endif
+  
   while (NowYear < 2031) {
     // DoneComputing barrier
     WaitBarrier("Watcher");
@@ -64,10 +70,15 @@ void Watcher()
     // DoneAssigning barrier
     WaitBarrier("Watcher");
     /**/
-    cout << "Month: " << NowMonth << ", Year: " << NowYear << endl;
-    cout << "Temperature: " << NowTemp << ", Precipitation: " << NowPrecip << endl;
-    cout << "Grain Height: " << NowHeight << ", Deer Population: " << NowNumDeer << endl;
-    cout << endl;
+
+    #ifdef CSV
+      cout << NowYear << "," << NowMonth << "," << (5./9.) * (NowTemp - 32) << "," << NowPrecip << "," << NowHeight * 2.54 << "," << NowNumDeer << "," << NowNumWolf << endl;
+    #else
+      cout << "Year: " << NowYear << ", Month: " << NowMonth << endl;
+      cout << "Temperature: " << NowTemp << ", Precipitation: " << NowPrecip << endl;
+      cout << "Grain Height: " << NowHeight << ", Deer Population: " << NowNumDeer << ", Wolf Population: " << NowNumWolf << endl;
+      cout << endl;
+    #endif
     
     NowMonth++;
     if (NowMonth == 12) {
@@ -79,5 +90,32 @@ void Watcher()
 
     // DonePrinting barrier
     WaitBarrier("Watcher");
+  }
+}
+
+void Wolf()
+{
+  while (NowYear < 2031) {
+    int nextNumWolf = NowNumWolf;
+    
+    // Wolves survive on deer and when the temperature is between -40 and 50 degrees Fahrenheit
+    if (NowNumDeer > nextNumWolf && NowTemp <= 50 && NowTemp >= -40) {
+      nextNumWolf++;
+    } else {
+      nextNumWolf--;
+    }
+
+    if (nextNumWolf < 0) nextNumWolf = 0;
+
+    // DoneComputing barrier
+    WaitBarrier("Wolf");
+
+    NowNumWolf = nextNumWolf;
+
+    // DoneAssigning barrier
+    WaitBarrier("Wolf");
+
+    // DonePrinting barrier
+    WaitBarrier("Wolf");
   }
 }

@@ -10,34 +10,32 @@ using namespace std;
 int main() {
   CalculateWeather( );
 
-  omp_set_num_threads( 3 );	// same as # of sections
-  InitBarrier( 3 );
+  omp_set_num_threads( 4 );	// same as # of sections
+  InitBarrier( 4 );
   #pragma omp parallel sections
   {
     #pragma omp section
     {
       Deer( );
-      cout << "Deer thread finished." << endl;
+      // cout << "Deer thread finished." << endl;
     }
   
     #pragma omp section
     {
       Grain( );
-      cout << "Grain thread finished." << endl;
+      // cout << "Grain thread finished." << endl;
     }
   
     #pragma omp section
     {
       Watcher( );
-      cout << "Watcher thread finished." << endl;
+      // cout << "Watcher thread finished." << endl;
     }
   
-    /*
     #pragma omp section
     {
-      MyAgent( );	// your own
+      Wolf( );	// your own
     }
-    */
   }       // implied barrier -- all functions must return in order
           // to allow any of them to get past here
 
