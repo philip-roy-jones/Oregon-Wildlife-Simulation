@@ -9,9 +9,12 @@
 
 using namespace std;
 
+void InitializeRandomSeed() {
+  srand(seed);
+}
+
 float Ranf( float low, float high )
 {
-  srand(seed); // Use the global seed variable to seed the random number generator
   float r = (float) rand();
   float t = r  /  (float) RAND_MAX;
 

@@ -8,7 +8,11 @@
 using namespace std;
 
 int main() {
-  CalculateWeather( );
+  // Set the random seed for reproducibility
+  InitializeRandomSeed();
+
+  // Initialize the weather
+  CalculateWeather();
 
   omp_set_num_threads( 4 );	// same as # of sections
   InitBarrier( 4 );

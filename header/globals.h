@@ -4,6 +4,7 @@ extern unsigned int seed;
 
 
 // Global state variables for the simulation
+extern int TotalMonthCount;                       // total number of months in the simulation (0 - 72)
 extern int	NowYear;                              // 2025- 2030
 extern int	NowMonth;                             // 0 - 11
 extern float	NowPrecip;                          // inches of rain per month
@@ -22,6 +23,7 @@ extern volatile int	NumGone;
 // Constants
 extern const float GRAIN_GROWS_PER_MONTH;         // inches of growth
 extern const float ONE_DEER_EATS_PER_MONTH;
+extern const float ONE_WOLF_EATS_PER_MONTH;
 
 extern const float AVG_PRECIP_PER_MONTH;	        // average (inches)
 extern const float AMP_PRECIP_PER_MONTH;	        // plus or minus

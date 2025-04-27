@@ -13,6 +13,8 @@ void Deer()
     int carryingCapacity = (int)( NowHeight );
     if ( nextNumDeer < carryingCapacity ) nextNumDeer++;
     else if ( nextNumDeer > carryingCapacity ) nextNumDeer--;
+
+    nextNumDeer -= (int)round((float)NowNumWolf * ONE_WOLF_EATS_PER_MONTH);
     
     if( nextNumDeer < 0 ) nextNumDeer = 0;
 
@@ -60,7 +62,7 @@ void Watcher()
   #define CSV
 
   #ifdef CSV
-    cout << "Year,Month,Temperature(C),Precipitation,GrainHeight(cm),DeerPopulation,WolfPopulation" << endl;
+    cout << "Month Index,Year,Month,Temperature(C),Precipitation,GrainHeight(cm),DeerPopulation,WolfPopulation" << endl;
   #endif
   
   while (NowYear < 2031) {
@@ -72,7 +74,7 @@ void Watcher()
     /**/
 
     #ifdef CSV
-      cout << NowYear << "," << NowMonth << "," << (5./9.) * (NowTemp - 32) << "," << NowPrecip << "," << NowHeight * 2.54 << "," << NowNumDeer << "," << NowNumWolf << endl;
+      cout << TotalMonthCount << "," << NowYear << "," << NowMonth << "," << (5./9.) * (NowTemp - 32) << "," << NowPrecip << "," << NowHeight * 2.54 << "," << NowNumDeer << "," << NowNumWolf << endl;
     #else
       cout << "Year: " << NowYear << ", Month: " << NowMonth << endl;
       cout << "Temperature: " << NowTemp << ", Precipitation: " << NowPrecip << endl;
@@ -80,6 +82,7 @@ void Watcher()
       cout << endl;
     #endif
     
+    TotalMonthCount++;
     NowMonth++;
     if (NowMonth == 12) {
         NowMonth = 0;
@@ -97,12 +100,18 @@ void Wolf()
 {
   while (NowYear < 2031) {
     int nextNumWolf = NowNumWolf;
-    
-    // Wolves survive on deer and when the temperature is between -40 and 50 degrees Fahrenheit
+
+    // Wolves survive on deer and when the temperature is between -40 and 50 degrees Fahrenheit (-40 and 10 degrees Celsius)
     if (NowNumDeer > nextNumWolf && NowTemp <= 50 && NowTemp >= -40) {
       nextNumWolf++;
     } else {
-      nextNumWolf--;
+      // If conditions are not ideal, one wolf may or may not die
+      // Randomly decide if a wolf dies (50% chance)
+      float theFateOfOneWolf = Ranf((float)0.0, (float)1.0);
+
+      if (theFateOfOneWolf <= 0.50) {
+        nextNumWolf--;
+      }
     }
 
     if (nextNumWolf < 0) nextNumWolf = 0;

@@ -6,4 +6,5 @@ float SQR( float x );
 void InitBarrier(int n);
 void WaitBarrier(const char* origin);
 
+void InitializeRandomSeed();
 void CalculateWeather();

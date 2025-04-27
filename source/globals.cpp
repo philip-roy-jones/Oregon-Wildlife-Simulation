@@ -2,17 +2,18 @@
 #include <ctime>
 #include "../header/globals.h"
 
-unsigned int seed = time(NULL);
+unsigned int seed = time(0);
 
 // Global state variables
-int	NowYear = 2025;   // 2025- 2030
-int	NowMonth = 0;     // 0 - 11
+int TotalMonthCount = 0;          // total number of months in the simulation (0 - 72)
+int	NowYear = 2025;               // 2025- 2030
+int	NowMonth = 0;                 // 0 - 11
   
-float	NowPrecip;      // inches of rain per month
-float	NowTemp;        // temperature this month
-float	NowHeight = 5;  // grain height in inches
-int	NowNumDeer = 2;   // number of deer in the current population
-int NowNumWolf = 2;   // number of wolves in the current population
+float	NowPrecip;                  // inches of rain per month
+float	NowTemp;                    // temperature this month
+float	NowHeight = 5;              // grain height in inches
+int	NowNumDeer = 2;               // number of deer in the current population
+int NowNumWolf = 1;               // number of wolves in the current population
 
 // Global state variables for the barrier
 omp_lock_t	Lock;
@@ -22,7 +23,8 @@ volatile int	NumGone;
 
 // Constants
 const float GRAIN_GROWS_PER_MONTH =	        12.0; // inches of growth
-const float ONE_DEER_EATS_PER_MONTH =		    1.0;
+const float ONE_DEER_EATS_PER_MONTH =		    1.0;  // 1 deer eats 1 inch of grain per month
+const float ONE_WOLF_EATS_PER_MONTH =		    0.2;  // 1/5 of a deer per month
   
 const float AVG_PRECIP_PER_MONTH =		      7.0;	// average (inches)
 const float AMP_PRECIP_PER_MONTH =		      6.0;	// plus or minus
